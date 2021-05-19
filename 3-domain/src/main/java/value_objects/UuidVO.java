@@ -1,8 +1,6 @@
 package value_objects;
 
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public final class UuidVO {
     private final String uuid;
@@ -26,9 +24,7 @@ public final class UuidVO {
         // regex for uuid pattern 8-4-4-4-12
         final String regex = "([a-f0-9]{8}(-[a-f0-9]{4}){4}[a-f0-9]{8})";
         // verify match on given uuid
-        final Pattern pattern = Pattern.compile(regex);
-        final Matcher matcher = pattern.matcher(uuid);
-        return matcher.find();
+        return uuid.matches(regex);
     }
 
     public String getUuid() {
