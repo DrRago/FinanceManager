@@ -2,7 +2,7 @@ package domain_services;
 
 import aggregates.UserAggregate;
 
-public interface AuthenticationService {
+public interface AuthenticationDomainService {
     boolean login(String username, String password);
 
     void logout();
