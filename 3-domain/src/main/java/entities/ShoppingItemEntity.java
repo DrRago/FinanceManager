@@ -1,4 +1,4 @@
-package enteties;
+package entities;
 
 import value_objects.ShoppingItemNameVO;
 

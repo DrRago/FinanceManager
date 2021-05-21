@@ -1,7 +1,7 @@
 package repositories;
 
-import enteties.ShoppingBillEntity;
-import enteties.ShoppingItemEntity;
+import entities.ShoppingBillEntity;
+import entities.ShoppingItemEntity;
 import value_objects.ShopNameVO;
 import value_objects.UuidVO;
 

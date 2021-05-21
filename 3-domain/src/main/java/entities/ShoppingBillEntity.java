@@ -1,4 +1,4 @@
-package enteties;
+package entities;
 
 import value_objects.ShopNameVO;
 
@@ -11,9 +11,13 @@ public class ShoppingBillEntity {
     private final List<ShoppingItemEntity> items;
 
     public ShoppingBillEntity(int ID, ShopNameVO shopName) {
+        this(ID, shopName, new ArrayList<>());
+    }
+
+    public ShoppingBillEntity(int ID, ShopNameVO shopName, List<ShoppingItemEntity> items) {
         this.ID = ID;
         this.shopName = shopName;
-        items = new ArrayList<>();
+        this.items = items;
     }
 
     public int getID() {
