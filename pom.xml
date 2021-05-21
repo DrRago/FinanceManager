@@ -10,6 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>3-domain</module>
+        <module>2-application</module>
     </modules>
 
     <properties>
