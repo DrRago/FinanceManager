@@ -12,13 +12,13 @@
         <module>3-domain</module>
         <module>2-application</module>
         <module>1-adapters</module>
-        <module>spring-app</module>
+        <module>0-spring-app</module>
         <module>0-plugins</module>
     </modules>
 
     <properties>
-        <maven.compiler.source>16</maven.compiler.source>
-        <maven.compiler.target>16</maven.compiler.target>
+        <maven.compiler.source>14</maven.compiler.source>
+        <maven.compiler.target>14</maven.compiler.target>
     </properties>
 
 </project>
