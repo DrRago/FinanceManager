@@ -11,30 +11,17 @@ public final class PasswordVO {
             return;
         }
 
-        throw new IllegalArgumentException("A password has to be at least eight characters long and contain two digits and letters");
+        throw new IllegalArgumentException("A password must be a SHA512 hash");
     }
 
     /**
-     * Password validity check. A password has to be at least eight characters long and contain two digits and letters
+     * Password validity check. Checks for the SHA512 hash to be 128 characters long
      *
      * @param password the password to check
      * @return whether the password is valid
      */
     private boolean isValid(String password) {
-        if (password.length() < 8) return false;
-
-        int charCount = 0;
-        int numCount = 0;
-        for (int i = 0; i < password.length(); i++) {
-
-            char ch = password.charAt(i);
-
-            if (Character.isLetter(ch)) numCount++;
-            if (Character.isDigit(ch)) charCount++;
-            if (!Character.isAlphabetic(ch)) return false; // TODO validate that it's working
-        }
-
-        return charCount >= 2 && numCount >= 2;
+        return password.matches("^\\w{128}$");
     }
 
     public String getPassword() {
