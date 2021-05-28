@@ -6,7 +6,6 @@ import repositories.UserRepository;
 import value_objects.PasswordVO;
 import value_objects.UsernameVO;
 
-import javax.naming.AuthenticationException;
 import java.sql.SQLException;
 
 public class AuthenticationService implements AuthenticationDomainService {
@@ -18,21 +17,14 @@ public class AuthenticationService implements AuthenticationDomainService {
     }
 
     @Override
-    public boolean login(UsernameVO username, PasswordVO password) throws SQLException {
-        UserAggregate user = userRepository.getUserByUsernameAndPassword(username, password);
-        if (user == null) {
+    public boolean login(UsernameVO username, PasswordVO password) {
+        UserAggregate user;
+        try {
+            user = userRepository.getUserByUsernameAndPassword(username, password);
+        } catch (SQLException throwable) {
             return false;
         }
-        currentUser = user;
-        return true;
-    }
-
-    @Override
-    public void logout() throws AuthenticationException {
-        if (currentUser == null) {
-            throw new AuthenticationException("No user logged in");
-        }
-        currentUser = null;
+        return user != null;
     }
 
     @Override
@@ -43,7 +35,7 @@ public class AuthenticationService implements AuthenticationDomainService {
         }
         try {
             currentUser = userRepository.addUser(username, password);
-        } catch (SQLException throwables) {
+        } catch (SQLException throwable) {
             return false;
         }
         return true;

@@ -81,7 +81,7 @@ public class UserRepositoryBridge implements UserRepository {
     public UserAggregate getUserByUsernameAndPassword(UsernameVO username, PasswordVO password) throws SQLException {
         PreparedStatement getUserStatement = connection.prepareStatement("SELECT * FROM user WHERE username = ? AND password = ?");
         getUserStatement.setString(1, username.getUsername());
-        getUserStatement.setString(1, password.getPassword());
+        getUserStatement.setString(2, password.getPassword());
 
         ResultSet userRes = getUserStatement.executeQuery();
         if (!userRes.next()) {
