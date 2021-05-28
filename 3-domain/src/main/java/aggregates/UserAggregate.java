@@ -35,6 +35,10 @@ public class UserAggregate {
         return Objects.hash(uuid);
     }
 
+    public UuidVO getUuid() {
+        return uuid;
+    }
+
     public UsernameVO getUsername() {
         return username;
     }
