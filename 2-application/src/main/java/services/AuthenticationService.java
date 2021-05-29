@@ -17,23 +17,23 @@ public class AuthenticationService implements AuthenticationDomainService {
     }
 
     @Override
-    public boolean login(UsernameVO username, PasswordVO password) {
+    public UserAggregate login(UsernameVO username, PasswordVO password) {
         UserAggregate user;
         try {
             user = userRepository.getUserByUsernameAndPassword(username, password);
         } catch (SQLException throwable) {
-            return false;
+            return null;
         }
-        return user != null;
+        return user;
     }
 
     @Override
-    public boolean register(UsernameVO username, PasswordVO password) throws SQLException {
-        UserAggregate user = userRepository.getUserByUsername(username);
-        if (user != null) {
-            throw new IllegalArgumentException("Username already exists");
-        }
+    public boolean register(UsernameVO username, PasswordVO password) {
         try {
+            UserAggregate user = userRepository.getUserByUsername(username);
+            if (user != null) {
+                throw new IllegalArgumentException("Username already exists");
+            }
             currentUser = userRepository.addUser(username, password);
         } catch (SQLException throwable) {
             return false;

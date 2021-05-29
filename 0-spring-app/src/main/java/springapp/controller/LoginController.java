@@ -1,4 +1,4 @@
-package springapp;
+package springapp.controller;
 
 import aggregates.UserAggregate;
 import authentication.Sha512Hash;
@@ -17,35 +17,33 @@ import value_objects.UsernameVO;
 import javax.servlet.http.HttpSession;
 
 @Controller
-public class AuthController {
+public class LoginController {
     @Value("${spring.application.name}")
     String appName;
 
     @GetMapping("/login")
-    public String loginRender(Model model, HttpSession session, @RequestParam(required = false) String error) {
+    public String loginRender(HttpSession session) {
         UserAggregate user = (UserAggregate) session.getAttribute("user");
         if (user != null) {
             return "redirect:/";
         }
-        if (error != null && error.equals("true")) {
-            model.addAttribute("error", "Wrong username or password");
-        }
-
         return "login";
     }
 
     @PostMapping("/login")
-    public String loginActor(HttpSession session, @RequestParam String username, @RequestParam String password) {
+    public String loginActor(Model model, HttpSession session, @RequestParam String username, @RequestParam String password) {
         UserRepository repo = new UserRepositoryBridge();
         AuthenticationService authService = new AuthenticationService(repo);
         UsernameVO usernameVO = new UsernameVO(username);
         PasswordVO passwordVO = new PasswordVO(Sha512Hash.hash(password));
 
-        if (authService.login(usernameVO, passwordVO)) {
-            session.setAttribute("user", authService.getUser());
+        UserAggregate user;
+        if ((user = authService.login(usernameVO, passwordVO)) != null) {
+            session.setAttribute("user", user);
             return "redirect:/";
         }
-        return "redirect:/login?error=true";
+        model.addAttribute("error", "Wrong username or password");
+        return "login";
     }
 
     @GetMapping("/logout")
