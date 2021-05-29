@@ -7,7 +7,5 @@ import value_objects.UsernameVO;
 public interface AuthenticationDomainService {
     UserAggregate login(UsernameVO username, PasswordVO password);
 
-    boolean register(UsernameVO username, PasswordVO password);
-
-    UserAggregate getUser();
+    UserAggregate register(UsernameVO username, PasswordVO password);
 }
