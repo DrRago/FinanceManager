@@ -29,7 +29,7 @@ public class UserRepositoryBridge implements UserRepository {
 
     @Override
     public void addUser(UserAggregate user) throws SQLException {
-        Connection connection = dbProvider.getConnection();
+        Connection connection = dbProvider.createConnection();
 
         PreparedStatement userAddStatement = connection.prepareStatement("INSERT INTO user VALUES (?, ?, ?)");
         userAddStatement.setString(1, user.getUuid().getUuid());
@@ -42,7 +42,7 @@ public class UserRepositoryBridge implements UserRepository {
 
     @Override
     public UserAggregate getUserByID(UuidVO id) throws SQLException {
-        Connection connection = dbProvider.getConnection();
+        Connection connection = dbProvider.createConnection();
 
         PreparedStatement getUserStatement = connection.prepareStatement("SELECT * FROM user WHERE id = ?");
         getUserStatement.setString(1, id.getUuid());
@@ -61,7 +61,7 @@ public class UserRepositoryBridge implements UserRepository {
 
     @Override
     public UserAggregate getUserByUsername(UsernameVO username) throws SQLException {
-        Connection connection = dbProvider.getConnection();
+        Connection connection = dbProvider.createConnection();
 
         PreparedStatement getUserStatement = connection.prepareStatement("SELECT * FROM user WHERE username = ?");
         getUserStatement.setString(1, username.getUsername());
@@ -80,7 +80,7 @@ public class UserRepositoryBridge implements UserRepository {
 
     @Override
     public UserAggregate getUserByUsernameAndPassword(UsernameVO username, PasswordVO password) throws SQLException {
-        Connection connection = dbProvider.getConnection();
+        Connection connection = dbProvider.createConnection();
 
         PreparedStatement getUserStatement = connection.prepareStatement("SELECT * FROM user WHERE username = ? AND password = ?");
         getUserStatement.setString(1, username.getUsername());

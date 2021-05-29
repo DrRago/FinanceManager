@@ -3,8 +3,6 @@ package domain_services;
 import java.sql.Connection;
 
 public interface DatabaseConnectionProviderDomainService {
-    Connection getConnection();
-
     Connection createConnection();
 
     void initializeUserTable();
@@ -14,6 +12,4 @@ public interface DatabaseConnectionProviderDomainService {
     void initializeShoppingBillItemTable();
 
     void initializeTables();
-
-    void close();
 }
