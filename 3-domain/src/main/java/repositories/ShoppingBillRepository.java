@@ -1,21 +1,19 @@
 package repositories;
 
 import entities.ShoppingBillEntity;
-import entities.ShoppingItemEntity;
 import value_objects.ShopNameVO;
+import value_objects.ShoppingItemVO;
 import value_objects.UsernameVO;
-import value_objects.UuidVO;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface ShoppingBillRepository {
-    void addShoppingBill(ShoppingBillEntity shoppingBill);
+    ShoppingBillEntity addShoppingBill(ShopNameVO shopName, UsernameVO user, List<ShoppingItemVO> items) throws SQLException;
 
-    ShoppingBillEntity addShoppingBill(int ID, ShopNameVO shopName, UsernameVO user, List<ShoppingItemEntity> items);
+    ShoppingBillEntity getEntryByID(int ID) throws SQLException;
 
-    ShoppingBillEntity getEntryByID(int ID);
-
-    List<ShoppingBillEntity> getAllShoppingBillsForUser(UuidVO uuid);
+    List<ShoppingBillEntity> getAllShoppingBillsForUser(UsernameVO user) throws SQLException;
 
 
 }

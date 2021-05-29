@@ -1,6 +1,7 @@
 package entities;
 
 import value_objects.ShopNameVO;
+import value_objects.ShoppingItemVO;
 import value_objects.UsernameVO;
 
 import java.util.ArrayList;
@@ -10,13 +11,13 @@ public class ShoppingBillEntity {
     private int ID;
     private ShopNameVO shopName;
     private UsernameVO user;
-    private final List<ShoppingItemEntity> items;
+    private final List<ShoppingItemVO> items;
 
     public ShoppingBillEntity(int ID, ShopNameVO shopName, UsernameVO user) {
         this(ID, shopName, user, new ArrayList<>());
     }
 
-    public ShoppingBillEntity(int ID, ShopNameVO shopName, UsernameVO user, List<ShoppingItemEntity> items) {
+    public ShoppingBillEntity(int ID, ShopNameVO shopName, UsernameVO user, List<ShoppingItemVO> items) {
         this.ID = ID;
         this.shopName = shopName;
         this.user = user;
@@ -47,11 +48,11 @@ public class ShoppingBillEntity {
         this.user = user;
     }
 
-    public List<ShoppingItemEntity> getItems() {
+    public List<ShoppingItemVO> getItems() {
         return items;
     }
 
-    public void addItem(ShoppingItemEntity item) {
+    public void addItem(ShoppingItemVO item) {
         items.add(item);
     }
 }
