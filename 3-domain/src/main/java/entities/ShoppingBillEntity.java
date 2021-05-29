@@ -1,6 +1,7 @@
 package entities;
 
 import value_objects.ShopNameVO;
+import value_objects.UsernameVO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,15 +9,17 @@ import java.util.List;
 public class ShoppingBillEntity {
     private int ID;
     private ShopNameVO shopName;
+    private UsernameVO user;
     private final List<ShoppingItemEntity> items;
 
-    public ShoppingBillEntity(int ID, ShopNameVO shopName) {
-        this(ID, shopName, new ArrayList<>());
+    public ShoppingBillEntity(int ID, ShopNameVO shopName, UsernameVO user) {
+        this(ID, shopName, user, new ArrayList<>());
     }
 
-    public ShoppingBillEntity(int ID, ShopNameVO shopName, List<ShoppingItemEntity> items) {
+    public ShoppingBillEntity(int ID, ShopNameVO shopName, UsernameVO user, List<ShoppingItemEntity> items) {
         this.ID = ID;
         this.shopName = shopName;
+        this.user = user;
         this.items = items;
     }
 
@@ -34,6 +37,14 @@ public class ShoppingBillEntity {
 
     public void setShopName(ShopNameVO shopName) {
         this.shopName = shopName;
+    }
+
+    public UsernameVO getUser() {
+        return user;
+    }
+
+    public void setUser(UsernameVO user) {
+        this.user = user;
     }
 
     public List<ShoppingItemEntity> getItems() {

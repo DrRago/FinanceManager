@@ -49,7 +49,7 @@ public class DatabaseConnectionProviderService implements DatabaseConnectionProv
     public void initializeShoppingBillTable() {
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("create table if not exists shopping_bill (id integer constraint shopping_bill_entity_pk primary key autoincrement, shopName TEXT not null)");
+            statement.executeUpdate("create table shopping_bill (id integer constraint shopping_bill_entity_pk primary key autoincrement,shopName TEXT not null,user TEST references user on update cascade on delete cascade)");
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
