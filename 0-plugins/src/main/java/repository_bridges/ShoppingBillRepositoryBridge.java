@@ -71,7 +71,7 @@ public class ShoppingBillRepositoryBridge implements ShoppingBillRepository {
     public List<ShoppingBillEntity> getAllShoppingBillsForUser(UsernameVO user) throws SQLException {
         Connection connection = dbProvider.createConnection();
 
-        PreparedStatement getEntriesStatement = connection.prepareStatement("SELECT * FROM shopping_bill WHERE user = ?");
+        PreparedStatement getEntriesStatement = connection.prepareStatement("SELECT * FROM shopping_bill WHERE user = ? ORDER BY date DESC ");
         getEntriesStatement.setString(1, user.getUsername());
 
         ResultSet entryRes = getEntriesStatement.executeQuery();
