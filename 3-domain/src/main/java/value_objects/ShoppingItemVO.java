@@ -3,8 +3,8 @@ package value_objects;
 import java.util.Objects;
 
 public class ShoppingItemVO {
-    private double price;
-    private ShoppingItemNameVO itemName;
+    private final double price;
+    private final ShoppingItemNameVO itemName;
 
     public ShoppingItemVO(double price, ShoppingItemNameVO itemName) {
         if (isValid(itemName)) {
@@ -30,16 +30,8 @@ public class ShoppingItemVO {
         return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
     public ShoppingItemNameVO getItemName() {
         return itemName;
-    }
-
-    public void setItemName(ShoppingItemNameVO itemName) {
-        this.itemName = itemName;
     }
 
     @Override

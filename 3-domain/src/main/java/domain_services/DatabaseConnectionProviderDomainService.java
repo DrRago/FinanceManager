@@ -10,6 +10,4 @@ public interface DatabaseConnectionProviderDomainService {
     void initializeShoppingBillTable();
 
     void initializeShoppingBillItemTable();
-
-    void initializeTables();
 }

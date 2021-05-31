@@ -8,7 +8,6 @@ import value_objects.UsernameVO;
 import value_objects.UuidVO;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.UUID;
 
 public class AuthenticationService implements AuthenticationDomainService {
@@ -33,7 +32,7 @@ public class AuthenticationService implements AuthenticationDomainService {
     public UserAggregate register(UsernameVO username, PasswordVO password) {
         try {
             UuidVO uuid = new UuidVO(UUID.randomUUID().toString());
-            UserAggregate user = new UserAggregate(uuid, username, password, new ArrayList<>());
+            UserAggregate user = new UserAggregate(uuid, username, password);
 
             userRepository.addUser(user);
 

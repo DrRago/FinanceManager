@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingBillItemRepositoryBridge implements ShoppingBillItemRepository {
-    DatabaseConnectionProviderService dbProvider = new DatabaseConnectionProviderService();
+    final DatabaseConnectionProviderService dbProvider = new DatabaseConnectionProviderService();
 
     public ShoppingBillItemRepositoryBridge() {
         dbProvider.initializeShoppingBillItemTable();
@@ -40,7 +40,7 @@ public class ShoppingBillItemRepositoryBridge implements ShoppingBillItemReposit
     }
 
     @Override
-    public ShoppingItemVO addItem(ShoppingItemVO item, int shoppingBillID) throws SQLException {
+    public void addItem(ShoppingItemVO item, int shoppingBillID) throws SQLException {
         Connection connection = dbProvider.createConnection();
 
         PreparedStatement addItemStatement = connection.prepareStatement("INSERT INTO shopping_bill_item (price, name, shopping_bill_id) VALUES (?, ?, ?)");
@@ -49,14 +49,7 @@ public class ShoppingBillItemRepositoryBridge implements ShoppingBillItemReposit
         addItemStatement.setInt(3, shoppingBillID);
 
         if (addItemStatement.execute()) {
-            return item;
         }
-        return null;
-    }
-
-    @Override
-    public ShoppingItemVO addItem(int price, ShoppingItemNameVO name, int shoppingBillID) throws SQLException {
-        return addItem(new ShoppingItemVO(price, name), shoppingBillID);
     }
 
     @Override

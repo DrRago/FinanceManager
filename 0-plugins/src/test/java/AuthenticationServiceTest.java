@@ -1,5 +1,6 @@
 import aggregates.UserAggregate;
 import authentication.Sha512Hash;
+import domain_services.AuthenticationDomainService;
 import org.junit.jupiter.api.Test;
 import repositories.UserRepository;
 import repository_bridges.UserRepositoryBridge;
@@ -21,7 +22,7 @@ public class AuthenticationServiceTest {
         PasswordVO password = new PasswordVO(Sha512Hash.hash(""));
 
         UserRepository userRepo = new UserRepositoryBridge();
-        AuthenticationService authService = new AuthenticationService(userRepo);
+        AuthenticationDomainService authService = new AuthenticationService(userRepo);
 
         UserAggregate user = authService.register(username, password);
         assertNotNull(user);

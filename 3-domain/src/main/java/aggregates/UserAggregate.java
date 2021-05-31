@@ -13,13 +13,11 @@ public class UserAggregate {
     private final UuidVO uuid;
     private final UsernameVO username;
     private final PasswordVO password;
-    private final List<ShoppingBillEntity> shoppingBills;
 
-    public UserAggregate(UuidVO uuid, UsernameVO username, PasswordVO password, List<ShoppingBillEntity> shoppingBills) {
+    public UserAggregate(UuidVO uuid, UsernameVO username, PasswordVO password) {
         this.uuid = uuid;
         this.username = username;
         this.password = password;
-        this.shoppingBills = shoppingBills;
     }
 
     @Override
@@ -47,7 +45,4 @@ public class UserAggregate {
         return password;
     }
 
-    public List<ShoppingBillEntity> getShoppingBills() {
-        return shoppingBills;
-    }
 }

@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DatabaseConnectionProviderService implements DatabaseConnectionProviderDomainService {
-    String dbPath = "database.db";
+    final String dbPath = "database.db";
 
     @Override
     public Connection createConnection() {
@@ -60,10 +60,4 @@ public class DatabaseConnectionProviderService implements DatabaseConnectionProv
         }
     }
 
-    @Override
-    public void initializeTables() {
-        initializeUserTable();
-        initializeShoppingBillTable();
-        initializeShoppingBillItemTable();
-    }
 }

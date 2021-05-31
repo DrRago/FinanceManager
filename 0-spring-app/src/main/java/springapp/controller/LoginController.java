@@ -2,6 +2,7 @@ package springapp.controller;
 
 import aggregates.UserAggregate;
 import authentication.Sha512Hash;
+import domain_services.AuthenticationDomainService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +34,7 @@ public class LoginController {
     @PostMapping("/login")
     public String loginActor(Model model, HttpSession session, @RequestParam String username, @RequestParam String password) {
         UserRepository repo = new UserRepositoryBridge();
-        AuthenticationService authService = new AuthenticationService(repo);
+        AuthenticationDomainService authService = new AuthenticationService(repo);
         UsernameVO usernameVO = new UsernameVO(username);
         PasswordVO passwordVO = new PasswordVO(Sha512Hash.hash(password));
 

@@ -8,23 +8,12 @@ import value_objects.UsernameVO;
 import value_objects.UuidVO;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.UUID;
 
 public class UserRepositoryBridge implements UserRepository {
-    DatabaseConnectionProviderService dbProvider = new DatabaseConnectionProviderService();
+    final DatabaseConnectionProviderService dbProvider = new DatabaseConnectionProviderService();
 
     public UserRepositoryBridge() {
         dbProvider.initializeUserTable();
-    }
-
-    @Override
-    public UserAggregate addUser(UsernameVO username, PasswordVO password) throws SQLException {
-        UuidVO uuid = new UuidVO(UUID.randomUUID().toString());
-        UserAggregate user = new UserAggregate(uuid, username, password, new ArrayList<>());
-        addUser(user);
-
-        return user;
     }
 
     @Override
@@ -52,44 +41,6 @@ public class UserRepositoryBridge implements UserRepository {
     }
 
     @Override
-    public UserAggregate getUserByID(UuidVO id) throws SQLException {
-        Connection connection = dbProvider.createConnection();
-
-        PreparedStatement getUserStatement = connection.prepareStatement("SELECT * FROM user WHERE id = ?");
-        getUserStatement.setString(1, id.getUuid());
-
-        ResultSet userRes = getUserStatement.executeQuery();
-        if (!userRes.next()) {
-            connection.close();
-            return null;
-        }
-        UsernameVO username = new UsernameVO(userRes.getString("username"));
-        PasswordVO password = new PasswordVO(userRes.getString("password"));
-
-        connection.close();
-        return new UserAggregate(id, username, password, new ArrayList<>());
-    }
-
-    @Override
-    public UserAggregate getUserByUsername(UsernameVO username) throws SQLException {
-        Connection connection = dbProvider.createConnection();
-
-        PreparedStatement getUserStatement = connection.prepareStatement("SELECT * FROM user WHERE username = ?");
-        getUserStatement.setString(1, username.getUsername());
-
-        ResultSet userRes = getUserStatement.executeQuery();
-        if (!userRes.next()) {
-            connection.close();
-            return null;
-        }
-        UuidVO uuid = new UuidVO(userRes.getString("id"));
-        PasswordVO password = new PasswordVO(userRes.getString("password"));
-
-        connection.close();
-        return new UserAggregate(uuid, username, password, new ArrayList<>());
-    }
-
-    @Override
     public UserAggregate getUserByUsernameAndPassword(UsernameVO username, PasswordVO password) throws SQLException {
         Connection connection = dbProvider.createConnection();
 
@@ -105,6 +56,6 @@ public class UserRepositoryBridge implements UserRepository {
         UuidVO uuid = new UuidVO(userRes.getString("id"));
 
         connection.close();
-        return new UserAggregate(uuid, username, password, new ArrayList<>());
+        return new UserAggregate(uuid, username, password);
     }
 }

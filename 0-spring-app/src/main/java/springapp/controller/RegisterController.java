@@ -2,6 +2,7 @@ package springapp.controller;
 
 import aggregates.UserAggregate;
 import authentication.Sha512Hash;
+import domain_services.AuthenticationDomainService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +32,7 @@ public class RegisterController {
                                 @RequestParam String password,
                                 @RequestParam(name = "password-repeat") String passwordRepeat) {
         UserRepository repo = new UserRepositoryBridge();
-        AuthenticationService authService = new AuthenticationService(repo);
+        AuthenticationDomainService authService = new AuthenticationService(repo);
 
         UsernameVO usernameVO;
         try {

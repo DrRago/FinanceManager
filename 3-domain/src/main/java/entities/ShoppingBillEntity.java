@@ -5,19 +5,14 @@ import value_objects.ShopNameVO;
 import value_objects.ShoppingItemVO;
 import value_objects.UsernameVO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingBillEntity {
-    private int ID;
-    private ShopNameVO shopName;
+    private final int ID;
+    private final ShopNameVO shopName;
     private DateVO date;
     private UsernameVO user;
     private final List<ShoppingItemVO> items;
-
-    public ShoppingBillEntity(int ID, ShopNameVO shopName, DateVO date, UsernameVO user) {
-        this(ID, shopName, date, user, new ArrayList<>());
-    }
 
     public ShoppingBillEntity(int ID, ShopNameVO shopName, DateVO date, UsernameVO user, List<ShoppingItemVO> items) {
         this.ID = ID;
@@ -31,16 +26,8 @@ public class ShoppingBillEntity {
         return ID;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
     public ShopNameVO getShopName() {
         return shopName;
-    }
-
-    public void setShopName(ShopNameVO shopName) {
-        this.shopName = shopName;
     }
 
     public DateVO getDate() {
@@ -63,7 +50,4 @@ public class ShoppingBillEntity {
         return items;
     }
 
-    public void addItem(ShoppingItemVO item) {
-        items.add(item);
-    }
 }

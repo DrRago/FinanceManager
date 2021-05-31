@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingBillRepositoryBridge implements ShoppingBillRepository {
-    DatabaseConnectionProviderService dbProvider = new DatabaseConnectionProviderService();
+    final DatabaseConnectionProviderService dbProvider = new DatabaseConnectionProviderService();
 
     public ShoppingBillRepositoryBridge() {
         dbProvider.initializeShoppingBillTable();
