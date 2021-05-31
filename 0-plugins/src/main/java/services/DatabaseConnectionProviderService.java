@@ -8,15 +8,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DatabaseConnectionProviderService implements DatabaseConnectionProviderDomainService {
+    String dbPath = "database.db";
+
     @Override
     public Connection createConnection() {
         Connection connection;
         // prepare database
         try {
             // create a database connection
-            connection = DriverManager.getConnection("jdbc:sqlite:database.db");
+            connection = DriverManager.getConnection("jdbc:sqlite:".concat(dbPath));
             Statement statement = connection.createStatement();
-            statement.setQueryTimeout(30); // set timeout to 30 sec.
+            statement.setQueryTimeout(30);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
