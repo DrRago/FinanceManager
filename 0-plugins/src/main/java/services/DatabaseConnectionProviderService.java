@@ -13,13 +13,16 @@ public class DatabaseConnectionProviderService implements DatabaseConnectionProv
     @Override
     public Connection createConnection() {
         Connection connection;
+
         // prepare database
         try {
             // create a database connection
+            Class.forName("org.sqlite.JDBC");
+
             connection = DriverManager.getConnection("jdbc:sqlite:".concat(dbPath));
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             return null;
         }
