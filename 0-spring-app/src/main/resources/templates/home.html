@@ -91,6 +91,9 @@
                 </button>
             </div>
             <div class="modal-body">
+                <div class="alert alert-danger" role="alert">
+                    <strong></strong>
+                </div>
                 <form id="addBillForm" method="post" action="/addBill">
                     <div class="form-group">
                         <label for="shopName">Shop Name</label>
@@ -125,14 +128,12 @@
 
 <script>
     let globalRowCount = 1;
-    $('#bills > tbody > tr').click(function () {
-        const id = $(this).attr("data-target");
-        $('.item-list').each((index, element) => {
-            if (id !== `#${$(element).attr("id")}`) {
-                $(element).removeClass("show")
-            }
-        })
-    })
+    let error = 0;
+
+    const urlParam = (name) => {
+        const results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+        return results === null ? 0 : results[1] || 0;
+    }
 
     const articleInputKeyUo = function () {
         let oneEmpty = false;
@@ -159,9 +160,29 @@
             addRow.find("input").keyup(articleInputKeyUo)
         }
     }
-    $("#itemList input").keyup(articleInputKeyUo);
     $(document).ready( function() {
         document.getElementById('date').valueAsDate = new Date();
+
+        $('#bills > tbody > tr').click(function () {
+            const id = $(this).attr("data-target");
+            $('.item-list').each((index, element) => {
+                if (id !== `#${$(element).attr("id")}`) {
+                    $(element).removeClass("show")
+                }
+            })
+        })
+        $("#itemList input").keyup(articleInputKeyUo);
+
+        error = urlParam("error");
+        console.log(error)
+        if (error !== 0) {
+            $('#addBillModal .alert strong').text(error)
+            $('#addBillModal .alert').show();
+            $('#addBillModal').modal('show');
+        }
+        if (error === 0) {
+            $('#addBillModal .alert').hide();
+        }
     });
 </script>
 

@@ -13,6 +13,8 @@ import repository_bridges.ShoppingBillRepositoryBridge;
 import verifier.FormDataVerifier;
 
 import javax.servlet.http.HttpSession;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -40,13 +42,15 @@ public class FinanceController {
             return "redirect:/login";
         }
 
-        System.out.println(a);
+        try {
+            ShoppingBillRepository repo = new ShoppingBillRepositoryBridge();
+            Map<String, List<String>> queryPairs = QueryParser.splitQuery(a);
+            ShoppingBillEntity bill = FormDataVerifier.verifyBillData(queryPairs, user.getUsername());
 
-        ShoppingBillRepository repo = new ShoppingBillRepositoryBridge();
-        Map<String, List<String>> queryPairs = QueryParser.splitQuery(a);
-        ShoppingBillEntity bill = FormDataVerifier.verifyBillData(queryPairs, user.getUsername());
-
-        repo.addShoppingBill(bill.getShopName(), bill.getDate(), bill.getUser(), bill.getItems());
+            repo.addShoppingBill(bill.getShopName(), bill.getDate(), bill.getUser(), bill.getItems());
+        } catch (Exception e) {
+            return "redirect:/?error=" + URLEncoder.encode(e.getMessage(), StandardCharsets.UTF_8);
+        }
         return "redirect:/";
     }
 }
