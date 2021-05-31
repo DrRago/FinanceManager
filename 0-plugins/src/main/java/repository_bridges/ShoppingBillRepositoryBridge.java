@@ -3,6 +3,7 @@ package repository_bridges;
 import entities.ShoppingBillEntity;
 import repositories.ShoppingBillRepository;
 import services.DatabaseConnectionProviderService;
+import value_objects.DateVO;
 import value_objects.ShopNameVO;
 import value_objects.ShoppingItemVO;
 import value_objects.UsernameVO;
@@ -19,12 +20,13 @@ public class ShoppingBillRepositoryBridge implements ShoppingBillRepository {
     }
 
     @Override
-    public ShoppingBillEntity addShoppingBill(ShopNameVO shopName, UsernameVO user, List<ShoppingItemVO> items) throws SQLException {
+    public ShoppingBillEntity addShoppingBill(ShopNameVO shopName, DateVO date, UsernameVO user, List<ShoppingItemVO> items) throws SQLException {
         Connection connection = dbProvider.createConnection();
 
-        PreparedStatement shoppingBillAddStatement = connection.prepareStatement("INSERT INTO shopping_bill (shopName, user) VALUES (?, ?)");
+        PreparedStatement shoppingBillAddStatement = connection.prepareStatement("INSERT INTO shopping_bill (shopName, date, user) VALUES (?, ?, ?)");
         shoppingBillAddStatement.setString(1, shopName.getShopName());
-        shoppingBillAddStatement.setString(2, user.getUsername());
+        shoppingBillAddStatement.setString(2, date.getDateSting());
+        shoppingBillAddStatement.setString(3, user.getUsername());
 
         shoppingBillAddStatement.execute();
 
@@ -40,7 +42,7 @@ public class ShoppingBillRepositoryBridge implements ShoppingBillRepository {
         }
 
         connection.close();
-        return new ShoppingBillEntity(id, shopName, user, items);
+        return new ShoppingBillEntity(id, shopName, date, user, items);
     }
 
     @Override
@@ -56,12 +58,14 @@ public class ShoppingBillRepositoryBridge implements ShoppingBillRepository {
             return null;
         }
         ShopNameVO shopName = new ShopNameVO(entryRes.getString("shopName"));
+        DateVO date = new DateVO(entryRes.getString("date"));
         UsernameVO user = new UsernameVO(entryRes.getString("user"));
 
         ShoppingBillItemRepositoryBridge itemRepo = new ShoppingBillItemRepositoryBridge();
 
         connection.close();
-        return new ShoppingBillEntity(ID, shopName, user, itemRepo.getAllItemsForBill(ID));
+
+        return new ShoppingBillEntity(ID, shopName, date, user, itemRepo.getAllItemsForBill(ID));
     }
 
     public List<ShoppingBillEntity> getAllShoppingBillsForUser(UsernameVO user) throws SQLException {
@@ -72,7 +76,7 @@ public class ShoppingBillRepositoryBridge implements ShoppingBillRepository {
 
         ResultSet entryRes = getEntriesStatement.executeQuery();
 
-        List <ShoppingBillEntity> result = new ArrayList<>();
+        List<ShoppingBillEntity> result = new ArrayList<>();
         while (entryRes.next()) {
             result.add(getEntryByID(entryRes.getInt("id")));
         }

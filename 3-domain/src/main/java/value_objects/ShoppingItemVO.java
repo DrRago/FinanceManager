@@ -10,6 +10,7 @@ public class ShoppingItemVO {
         if (isValid(itemName)) {
             this.price = price;
             this.itemName = itemName;
+            return;
         }
 
         throw new IllegalArgumentException("ItemName mustn't be null");
