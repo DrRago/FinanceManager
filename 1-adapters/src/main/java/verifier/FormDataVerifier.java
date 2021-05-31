@@ -13,7 +13,7 @@ public class FormDataVerifier {
         String date = null;
 
         List<ShoppingItemNameVO> itemNames = new ArrayList<>();
-        List<Integer> prices = new ArrayList<>();
+        List<Double> prices = new ArrayList<>();
         for (Map.Entry<String, List<String>> entry : queryPairs.entrySet()) {
             switch (entry.getKey()) {
                 case "shopName" -> shopName = entry.getValue().get(0);
@@ -28,7 +28,7 @@ public class FormDataVerifier {
                         break;
                     }
                     if (entry.getKey().startsWith("price")) {
-                        prices.add(Integer.valueOf(entry.getValue().get(0)));
+                        prices.add(Double.valueOf(entry.getValue().get(0)));
                     }
                 }
             }

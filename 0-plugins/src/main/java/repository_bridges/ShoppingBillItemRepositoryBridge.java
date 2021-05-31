@@ -44,7 +44,7 @@ public class ShoppingBillItemRepositoryBridge implements ShoppingBillItemReposit
         Connection connection = dbProvider.createConnection();
 
         PreparedStatement addItemStatement = connection.prepareStatement("INSERT INTO shopping_bill_item (price, name, shopping_bill_id) VALUES (?, ?, ?)");
-        addItemStatement.setInt(1, item.getPrice());
+        addItemStatement.setInt(1, (int) (item.getPrice() * 100));
         addItemStatement.setString(2, item.getItemName().getShoppingItemName());
         addItemStatement.setInt(3, shoppingBillID);
 

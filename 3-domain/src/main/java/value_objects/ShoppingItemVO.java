@@ -3,12 +3,12 @@ package value_objects;
 import java.util.Objects;
 
 public class ShoppingItemVO {
-    private int price;
+    private double price;
     private ShoppingItemNameVO itemName;
 
-    public ShoppingItemVO(int price, ShoppingItemNameVO itemName) {
+    public ShoppingItemVO(double price, ShoppingItemNameVO itemName) {
         if (isValid(itemName)) {
-            this.price = price;
+            this.price = price / 100;
             this.itemName = itemName;
             return;
         }
@@ -26,11 +26,11 @@ public class ShoppingItemVO {
         return itemName != null;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
