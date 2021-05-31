@@ -10,6 +10,8 @@ import java.sql.SQLException;
 public interface UserRepository {
     UserAggregate addUser(UsernameVO username, PasswordVO password) throws SQLException;
 
+    void removeUser(UuidVO id) throws SQLException;
+
     void addUser(UserAggregate user) throws SQLException;
 
     UserAggregate getUserByID(UuidVO id) throws SQLException;

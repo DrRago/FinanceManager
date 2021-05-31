@@ -28,6 +28,17 @@ public class UserRepositoryBridge implements UserRepository {
     }
 
     @Override
+    public void removeUser(UuidVO id) throws SQLException {
+        Connection connection = dbProvider.createConnection();
+
+        PreparedStatement userAddStatement = connection.prepareStatement("DELETE FROM user WHERE id = ?");
+        userAddStatement.setString(1, id.getUuid());
+
+        userAddStatement.execute();
+        connection.close();
+    }
+
+    @Override
     public void addUser(UserAggregate user) throws SQLException {
         Connection connection = dbProvider.createConnection();
 
