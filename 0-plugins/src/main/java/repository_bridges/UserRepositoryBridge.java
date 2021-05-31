@@ -31,10 +31,10 @@ public class UserRepositoryBridge implements UserRepository {
     public void removeUser(UuidVO id) throws SQLException {
         Connection connection = dbProvider.createConnection();
 
-        PreparedStatement userAddStatement = connection.prepareStatement("DELETE FROM user WHERE id = ?");
-        userAddStatement.setString(1, id.getUuid());
+        PreparedStatement userRemoveStatement = connection.prepareStatement("DELETE FROM user WHERE id = ?");
+        userRemoveStatement.setString(1, id.getUuid());
 
-        userAddStatement.execute();
+        userRemoveStatement.execute();
         connection.close();
     }
 
