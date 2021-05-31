@@ -22,7 +22,7 @@ public class FormDataVerifier {
                     if (entry.getValue().get(0) == null) {
                         break;
                     }
-                    // should only be item[i] and price[i] left
+                    // should only be item[i] and price[i] left, rest is ignored
                     if (entry.getKey().startsWith("item")) {
                         itemNames.add(new ShoppingItemNameVO(entry.getValue().get(0)));
                         break;

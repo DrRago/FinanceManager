@@ -50,6 +50,6 @@ public class LoginController {
     public String logout(Model model, HttpSession session) {
         model.addAttribute("appName", session.getId());
         session.invalidate();
-        return "home";
+        return "redirect:/login";
     }
 }

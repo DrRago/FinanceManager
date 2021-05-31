@@ -22,6 +22,9 @@
 <body style="margin-top: 5rem">
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" style="margin-left: auto; margin-right: auto" href="/">Finance Overview</a>
+    <form class="form-inline my-2 my-lg-0" action="/logout" method="get" style="margin-right: 10%">
+        <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Logout</button>
+    </form>
 </nav>
 
 <div class="container">
@@ -30,7 +33,6 @@
             <table class="table table-hover" id="bills" style="border-collapse:collapse;float: left;width: 80%">
                 <thead>
                 <tr>
-                    <th scope="col">#</th>
                     <th scope="col">Store</th>
                     <th scope="col">Date</th>
                     <th scope="col">Price</th>
@@ -39,7 +41,6 @@
                 <tbody>
                 <th:block th:each="bill,iter : ${bills}">
                     <tr data-toggle="collapse" th:attr="data-target=${'#data' + iter.index}" class="accordion-toggle">
-                        <td th:text="${bill.ID}">...</td>
                         <td th:text="${bill.shopName.shopName}">...</td>
                         <td th:text="${bill.date.getDateSting()}">...</td>
                         <td th:text="${#numbers.formatDecimal(#aggregates.sum(bill.items.![price]), 0, 'COMMA', 2, 'POINT') + '€'}">...</td>
