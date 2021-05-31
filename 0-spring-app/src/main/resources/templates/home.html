@@ -1,7 +1,166 @@
-<html>
-<head><title>Home Page</title></head>
-<body>
-<h1>Hello !</h1>
-<p>Welcome to <span th:text="${appName}">Our App</span></p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FinanceManager - Home</title>
+
+    <link rel="stylesheet" href="/bootstrap.min.css">
+    <script src="/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="/knockout.min.js"></script>
+
+    <style>
+        #bills > tbody > tr {
+            cursor: pointer;
+        }
+
+        #bills > tbody > tr {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body style="margin-top: 5rem">
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" style="margin-left: auto; margin-right: auto" href="/">Finance Overview</a>
+</nav>
+
+<div class="container">
+    <div>
+        <div>
+            <table class="table table-hover" id="bills" style="border-collapse:collapse;float: left;width: 80%">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Store</th>
+                    <th scope="col">Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="bill,iter : ${bills}">
+                    <tr data-toggle="collapse" th:attr="data-target=${'#data' + iter.index}" class="accordion-toggle">
+                        <td th:text="${bill.ID}">...</td>
+                        <td th:text="${bill.shopName.shopName}">...</td>
+                        <td th:text="${#aggregates.sum(bill.items.![price])}">...</td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+            <div style="position: relative; width: 30%; float: left">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#addBillModal">Add Bill</button>
+            </div>
+        </div>
+
+        <th:block th:each="bill,iter : ${bills}">
+            <div class="item-list accordian-body collapse" th:attr="id=${'data' + iter.index}"
+                 style="right: 10%; width: 18%; position:fixed;">
+                <table class="table" style="float: right">
+                    <colgroup>
+                        <col style="width: 75%"/>
+                        <col style="width: 20%"/>
+                    </colgroup>
+
+                    <thead>
+                    <tr>
+                        <th scope="col">Article</th>
+                        <th scope="col">Price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item : ${bill.items}">
+                        <td th:text="${item.itemName.shoppingItemName}">...</td>
+                        <td th:text="${item.price}">...</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </th:block>
+    </div>
+</div>
+
+<div class="modal fade" id="addBillModal" tabindex="-1" role="dialog" aria-labelledby="addBillModalLongTitle"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addBillModalLongTitle">Add Bill</h5>
+                <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addBillForm" method="post" action="/addBill">
+                    <div class="form-group">
+                        <label for="shopName">Shop Name</label>
+                        <input type="text" name="shopName" class="form-control" id="shopName"
+                               placeholder="Enter Shop Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" name="date" class="form-control" id="date"
+                               placeholder="Date" required>
+                    </div>
+                    <label>Articles</label>
+                    <div id="itemList">
+                        <div class="row row-1">
+                            <div class="col">
+                                <input type="text" name="item1" class="form-control" placeholder="Article Name" required>
+                            </div>
+                            <div class="col">
+                                <input type="number" name="price1" class="form-control" placeholder="Price" required>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" form="addBillForm">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let globalRowCount = 1;
+    $('#bills > tbody > tr').click(function () {
+        const id = $(this).attr("data-target");
+        $('.item-list').each((index, element) => {
+            if (id !== `#${$(element).attr("id")}`) {
+                $(element).removeClass("show")
+            }
+        })
+    })
+
+    const articleInputKeyUo = function () {
+        let oneEmpty = false;
+        $(this).parent().parent().find("input").each((index, element) => {
+            if ($(element).val() === "") {
+                oneEmpty = true;
+            }
+        });
+
+        if (!$(this).parent().parent().is(':last-child')) {
+            return;
+        }
+        if (!oneEmpty) {
+            globalRowCount ++;
+            const addRow = $(`<div class="row row-${globalRowCount}">
+                                <div class="col">
+                                    <input type="text" name="item${globalRowCount}" class="form-control" placeholder="Article Name">
+                                </div>
+                                <div class="col">
+                                    <input type="text" name="price${globalRowCount}" class="form-control" placeholder="Price">
+                                </div>
+                            </div>`)
+            $("#itemList").append(addRow);
+            addRow.find("input").keyup(articleInputKeyUo)
+        }
+    }
+    $("#itemList input").keyup(articleInputKeyUo);
+    $(document).ready( function() {
+        document.getElementById('date').valueAsDate = new Date();
+    });
+</script>
+
 </body>
 </html>
