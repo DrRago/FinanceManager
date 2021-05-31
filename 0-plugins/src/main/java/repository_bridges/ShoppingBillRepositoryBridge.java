@@ -46,6 +46,21 @@ public class ShoppingBillRepositoryBridge implements ShoppingBillRepository {
     }
 
     @Override
+    public void removeEntryByID(int ID) throws SQLException {
+        Connection connection = dbProvider.createConnection();
+
+        PreparedStatement removeEntryStatement = connection.prepareStatement("DELETE FROM shopping_bill WHERE id = ?");
+        removeEntryStatement.setInt(1, ID);
+        removeEntryStatement.execute();
+
+        PreparedStatement removeItemStatement = connection.prepareStatement("DELETE FROM shopping_bill_item WHERE shopping_bill_id = ?");
+        removeItemStatement.setInt(1, ID);
+        removeItemStatement.execute();
+
+        connection.close();
+    }
+
+    @Override
     public ShoppingBillEntity getEntryByID(int ID) throws SQLException {
         Connection connection = dbProvider.createConnection();
 

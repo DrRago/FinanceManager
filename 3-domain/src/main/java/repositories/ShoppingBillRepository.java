@@ -12,6 +12,8 @@ import java.util.List;
 public interface ShoppingBillRepository {
     ShoppingBillEntity addShoppingBill(ShopNameVO shopName, DateVO date, UsernameVO user, List<ShoppingItemVO> items) throws SQLException;
 
+    void removeEntryByID(int ID) throws SQLException;
+
     ShoppingBillEntity getEntryByID(int ID) throws SQLException;
 
     List<ShoppingBillEntity> getAllShoppingBillsForUser(UsernameVO user) throws SQLException;
