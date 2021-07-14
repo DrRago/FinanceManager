@@ -1,8 +1,9 @@
 package value_objects;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public final class UsernameVO {
+public final class UsernameVO implements Serializable {
     private final String username;
 
     public UsernameVO(String username) {

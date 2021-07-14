@@ -1,14 +1,13 @@
 package aggregates;
 
-import entities.ShoppingBillEntity;
 import value_objects.PasswordVO;
 import value_objects.UsernameVO;
 import value_objects.UuidVO;
 
-import java.util.List;
+import java.io.Serializable;
 import java.util.Objects;
 
-public class UserAggregate {
+public class UserAggregate implements Serializable {
 
     private final UuidVO uuid;
     private final UsernameVO username;

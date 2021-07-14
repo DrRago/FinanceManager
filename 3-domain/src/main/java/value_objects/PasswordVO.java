@@ -1,8 +1,9 @@
 package value_objects;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public final class PasswordVO {
+public final class PasswordVO implements Serializable {
     private final String password;
 
     public PasswordVO(String password) {

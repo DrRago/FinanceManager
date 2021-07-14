@@ -1,8 +1,9 @@
 package value_objects;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public final class UuidVO {
+public final class UuidVO implements Serializable {
     private final String uuid;
 
     public UuidVO(String uuid) {
